@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>iCare Corporate — ลงทะเบียนรับสิทธิพิเศษ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+  /* ════════════════════════════════════════════════
+     CONFIGURATION — เปลี่ยนตรงนี้เพื่อปรับ Branding
+     ════════════════════════════════════════════════ */
+  :root {
+    /* Brand colors (สลับตามลูกค้า) */
+    --brand-primary: #C8102E;      /* AIA Red */
+    --brand-secondary: #8B0000;    /* Dark Red */
+    --brand-accent: #FFD700;       /* Gold accent */
+    --brand-light: #fff5f5;        /* Light tint */
+
+    /* iCare fixed colors */
+    --icare-dark: #111827;
+    --icare-mid: #374151;
+    --icare-muted: #6B7280;
+    --icare-border: #E5E7EB;
+    --icare-bg: #F9FAFB;
+    --icare-white: #FFFFFF;
+
+    /* Typography */
+    --font-main: 'IBM Plex Sans Thai', 'Sarabun', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-main);
+    background: var(--icare-bg);
+    color: var(--icare-dark);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ─── TOP BADGE ─────────────────────────────── */
+  .top-badge {
+    background: var(--icare-dark);
+    color: #fff;
+    text-align: center;
+    padding: 10px 20px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .top-badge span.dot { width: 6px; height: 6px; background: #22C55E; border-radius: 50%; display: inline-block; animation: pulse-dot 2s infinite; }
+  @keyframes pulse-dot { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
+  /* ─── MAIN LAYOUT ───────────────────────────── */
+  .page-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 20px 60px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  /* ─── LEFT PANEL — BENEFITS ─────────────────── */
+  .benefits-panel {
+    position: sticky;
+    top: 24px;
+  }
+
+  /* Partner badge */
+  .partner-card {
+    background: var(--icare-white);
+    border: 1px solid var(--icare-border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    margin-bottom: 20px;
+  }
+
+  .partner-header {
+    background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+    padding: 32px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .partner-header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 180px; height: 180px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+  }
+  .partner-header::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -30px;
+    width: 220px; height: 220px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+
+  .partner-logo-area {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .partner-logo-box {
+    width: 52px; height: 52px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+  }
+  .partner-logo-box svg { width: 28px; height: 28px; fill: #fff; }
+  .partner-meta {}
+  .partner-meta .label { font-size: 11px; color: rgba(255,255,255,0.65); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 2px; }
+  .partner-meta .name  { font-size: 20px; color: #fff; font-weight: 700; line-height: 1.2; }
+
+  .partner-tagline {
+    position: relative;
+    z-index: 1;
+    color: rgba(255,255,255,0.85);
+    font-size: 13.5px;
+    font-weight: 400;
+  }
+
+  /* Benefits list */
+  .benefits-body { padding: 24px 28px 28px; }
+  .benefits-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--icare-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .benefits-title::after { content: ''; flex: 1; height: 1px; background: var(--icare-border); }
+
+  .benefit-item {
+    display: flex;
+    gap: 14px;
+    padding: 16px;
+    border-radius: 14px;
+    border: 1px solid var(--icare-border);
+    background: var(--icare-bg);
+    margin-bottom: 12px;
+    transition: all 0.2s ease;
+  }
+  .benefit-item:hover { border-color: var(--brand-primary); background: var(--brand-light); transform: translateX(4px); }
+  .benefit-item:last-child { margin-bottom: 0; }
+
+  .benefit-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .benefit-icon.red   { background: #FEE2E2; }
+  .benefit-icon.blue  { background: #DBEAFE; }
+  .benefit-icon.green { background: #D1FAE5; }
+
+  .benefit-text {}
+  .benefit-text h4 { font-size: 14px; font-weight: 600; color: var(--icare-dark); margin-bottom: 3px; }
+  .benefit-text .value { font-size: 15px; font-weight: 700; color: var(--brand-primary); }
+  .benefit-text .desc  { font-size: 12px; color: var(--icare-muted); margin-top: 2px; }
+
+  /* Branches */
+  .branches-card {
+    background: var(--icare-white);
+    border: 1px solid var(--icare-border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+  }
+  .branches-header {
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--icare-border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .branches-header h3 { font-size: 14px; font-weight: 600; }
+  .branches-header span { font-size: 18px; }
+
+  .branches-body { padding: 16px 22px 20px; }
+
+  .city-group { margin-bottom: 18px; }
+  .city-group:last-child { margin-bottom: 0; }
+  .city-label {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 700; color: var(--brand-primary);
+    letter-spacing: 0.05em; text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .city-label::before { content: '📍'; font-size: 14px; }
+
+  .branch-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--icare-border);
+    font-size: 13px;
+  }
+  .branch-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .branch-name { color: var(--icare-mid); font-weight: 500; }
+  .branch-tel  { color: var(--icare-muted); font-size: 12px; font-family: 'Courier New', monospace; }
+
+  /* Tip */
+  .tip-box {
+    margin-top: 16px;
+    background: #FFFBEB;
+    border: 1px solid #FDE68A;
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 12.5px;
+    color: #92400E;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .tip-box .icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ─── RIGHT PANEL — FORM ─────────────────────── */
+  .form-panel {}
+
+  .form-card {
+    background: var(--icare-white);
+    border: 1px solid var(--icare-border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.07);
+  }
+
+  .form-header {
+    padding: 28px 32px 24px;
+    border-bottom: 1px solid var(--icare-border);
+    position: relative;
+  }
+  .form-header-top {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .form-badge {
+    background: var(--brand-light);
+    color: var(--brand-primary);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 99px;
+    border: 1px solid rgba(200,16,46,0.2);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .qr-placeholder {
+    width: 40px; height: 40px;
+    background: var(--icare-bg);
+    border: 1px solid var(--icare-border);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+
+  .form-header h2 { font-size: 22px; font-weight: 700; color: var(--icare-dark); margin-bottom: 4px; }
+  .form-header p  { font-size: 13.5px; color: var(--icare-muted); }
+
+  .form-body { padding: 28px 32px; }
+
+  /* Steps progress */
+  .step-indicator {
+    display: flex; gap: 6px; margin-bottom: 28px;
+    align-items: center;
+  }
+  .step { display: flex; align-items: center; gap: 6px; }
+  .step-num {
+    width: 26px; height: 26px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+    background: var(--icare-border); color: var(--icare-muted);
+    transition: all 0.3s;
+  }
+  .step-num.active { background: var(--brand-primary); color: #fff; }
+  .step-num.done   { background: #22C55E; color: #fff; }
+  .step-label { font-size: 11px; color: var(--icare-muted); display: none; }
+  .step-line { flex: 1; height: 1px; background: var(--icare-border); }
+
+  /* Field groups */
+  .field-group { margin-bottom: 20px; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+  @media (max-width: 600px) { .field-row { grid-template-columns: 1fr; } }
+
+  label {
+    display: block;
+    font-size: 13px; font-weight: 600;
+    color: var(--icare-mid);
+    margin-bottom: 7px;
+  }
+  label .req { color: var(--brand-primary); margin-left: 2px; }
+
+  .input-wrap { position: relative; }
+  .input-icon {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    font-size: 16px; pointer-events: none; color: var(--icare-muted);
+  }
+  input[type=text],
+  input[type=tel],
+  input[type=email],
+  select,
+  textarea {
+    width: 100%;
+    padding: 12px 14px 12px 42px;
+    border: 1.5px solid var(--icare-border);
+    border-radius: 12px;
+    font-family: var(--font-main);
+    font-size: 14px;
+    color: var(--icare-dark);
+    background: var(--icare-bg);
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    outline: none;
+    appearance: none;
+  }
+  input:not(.has-icon), select:not(.has-icon), textarea:not(.has-icon) {
+    padding-left: 14px;
+  }
+  input.has-icon, select.has-icon, textarea.has-icon {
+    padding-left: 42px;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--brand-primary);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(200,16,46,0.08);
+  }
+  input.error, select.error { border-color: #EF4444; background: #FFF5F5; }
+  input::placeholder { color: #C4C9D4; }
+  textarea { resize: vertical; min-height: 80px; padding-top: 12px; }
+  select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; cursor: pointer; }
+
+  .error-msg { font-size: 11.5px; color: #EF4444; margin-top: 5px; display: none; }
+  .error-msg.visible { display: block; }
+
+  /* Checkbox group */
+  .checkbox-group { display: flex; flex-direction: column; gap: 10px; }
+
+  .checkbox-item {
+    display: flex; gap: 12px;
+    padding: 14px 16px;
+    border: 1.5px solid var(--icare-border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--icare-bg);
+    position: relative;
+  }
+  .checkbox-item:hover { border-color: var(--brand-primary); background: var(--brand-light); }
+  .checkbox-item.checked { border-color: var(--brand-primary); background: var(--brand-light); }
+
+  .checkbox-item input[type=checkbox] {
+    width: 18px; height: 18px; padding: 0;
+    margin: 0; flex-shrink: 0; margin-top: 2px;
+    accent-color: var(--brand-primary);
+    cursor: pointer;
+  }
+  /* Override padding for checkboxes */
+  .checkbox-item input[type=checkbox] { padding-left: 0; }
+
+  .checkbox-content { flex: 1; }
+  .checkbox-content h5 { font-size: 14px; font-weight: 600; color: var(--icare-dark); margin-bottom: 2px; }
+  .checkbox-content .tag {
+    display: inline-block;
+    font-size: 11px; font-weight: 700;
+    padding: 2px 9px; border-radius: 99px;
+    margin-top: 3px;
+  }
+  .tag.red   { background: #FEE2E2; color: var(--brand-primary); }
+  .tag.blue  { background: #DBEAFE; color: #1D4ED8; }
+  .tag.green { background: #D1FAE5; color: #065F46; }
+
+  /* Divider */
+  .divider {
+    border: none; border-top: 1px solid var(--icare-border);
+    margin: 24px 0;
+  }
+
+  .section-subtitle {
+    font-size: 12px; font-weight: 600; color: var(--icare-muted);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-subtitle::after { content: ''; flex: 1; height: 1px; background: var(--icare-border); }
+
+  /* Submit button */
+  .submit-btn {
+    width: 100%;
+    padding: 16px 24px;
+    background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    font-family: var(--font-main);
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  .submit-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0);
+    transition: background 0.2s;
+  }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(200,16,46,0.35); }
+  .submit-btn:hover::after { background: rgba(255,255,255,0.08); }
+  .submit-btn:active { transform: translateY(0); }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .submit-btn .btn-icon { font-size: 18px; }
+  .submit-btn .spinner { width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .consent-text {
+    text-align: center;
+    font-size: 11.5px;
+    color: var(--icare-muted);
+    margin-top: 12px;
+    line-height: 1.7;
+  }
+
+  /* ─── SUCCESS SCREEN ─────────────────────────── */
+  .success-screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 32px;
+    text-align: center;
+  }
+  .success-screen.visible { display: flex; }
+  .success-icon {
+    width: 80px; height: 80px;
+    background: linear-gradient(135deg, #22C55E, #16A34A);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px;
+    margin-bottom: 20px;
+    animation: pop-in 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+  @keyframes pop-in { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .success-screen h3 { font-size: 22px; font-weight: 700; color: var(--icare-dark); margin-bottom: 8px; }
+  .success-screen p  { font-size: 14px; color: var(--icare-muted); max-width: 340px; line-height: 1.7; }
+  .success-ref {
+    margin-top: 20px;
+    background: var(--icare-bg);
+    border: 1px solid var(--icare-border);
+    border-radius: 12px;
+    padding: 14px 24px;
+    font-size: 13px;
+    color: var(--icare-mid);
+  }
+  .success-ref strong { font-size: 16px; color: var(--brand-primary); }
+  .new-reg-btn {
+    margin-top: 20px;
+    padding: 10px 28px;
+    border: 1.5px solid var(--icare-border);
+    background: #fff;
+    border-radius: 99px;
+    font-family: var(--font-main);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--icare-mid);
+    transition: all 0.2s;
+  }
+  .new-reg-btn:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
+
+  /* ─── FOOTER ─────────────────────────────────── */
+  .page-footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 12px;
+    color: var(--icare-muted);
+    line-height: 2;
+  }
+  .page-footer strong { color: var(--icare-mid); }
+
+  /* Animate in */
+  .animate-up { animation: fadeUp 0.5s ease both; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+</style>
+</head>
+<body>
+
+<!-- TOP NOTICE -->
+<div class="top-badge">
+  <span class="dot"></span>
+  โปรแกรมพิเศษสำหรับพนักงานองค์กร — iCare Apple Authorized Service Provider
+</div>
+
+<div class="page-wrapper">
+  <div class="grid">
+
+    <!-- ═══════════════════════════════════
+         LEFT — BENEFITS + BRANCHES
+    ═══════════════════════════════════ -->
+    <div class="benefits-panel">
+
+      <!-- Partner card -->
+      <div class="partner-card animate-up">
+        <div class="partner-header">
+          <div class="partner-logo-area">
+            <div class="partner-logo-box">
+              <!-- Shield icon (generic — swap with partner logo) -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V7L12 2zm-1 13l-3-3 1.41-1.41L11 13.17l4.59-4.58L17 10l-6 5z"/></svg>
+            </div>
+            <div class="partner-meta">
+              <!-- 🔧 CONFIG: เปลี่ยน label และ name ตามลูกค้า -->
+              <div class="label">Corporate Partner</div>
+              <div class="name" id="partnerName">AIA The Next 5</div>
+            </div>
+          </div>
+          <div class="partner-tagline" id="partnerTagline">
+            เอกสิทธิ์เฉพาะคุณ ดูแลอุปกรณ์คู่ใจให้พร้อมใช้งานเสมอ
+          </div>
+        </div>
+
+        <div class="benefits-body">
+          <div class="benefits-title">สิทธิพิเศษที่คุณจะได้รับ</div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon red">🔋</div>
+            <div class="benefit-text">
+              <h4>ส่วนลดเปลี่ยนแบตเตอรี่ iPhone</h4>
+              <div class="value">ส่วนลด 1,000 บาท</div>
+              <div class="desc">ยืดอายุการใช้งาน ให้คุณติดต่อลูกค้าได้ไม่สะดุด</div>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon blue">🖥️</div>
+            <div class="benefit-text">
+              <h4>บริการตรวจเช็ค iPad ฟรี</h4>
+              <div class="value">ฟรี! ค่าบริการ <span style="text-decoration:line-through;font-size:13px;font-weight:400;color:var(--icare-muted)">(ปกติ 500 บาท)</span></div>
+              <div class="desc">ตรวจเช็คสภาพเครื่องอย่างละเอียดโดยผู้เชี่ยวชาญ</div>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon green">🛡️</div>
+            <div class="benefit-text">
+              <h4>ต่ออายุประกัน AppleCare+</h4>
+              <div class="value">ส่วนลด 10%</div>
+              <div class="desc">iPhone, iPad, Mac — ประกันอุบัติเหตุครอบคลุมทุกกรณี</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Branches card -->
+      <div class="branches-card animate-up delay-1">
+        <div class="branches-header">
+          <span>🏪</span>
+          <h3>สาขาที่ร่วมรายการ</h3>
+        </div>
+        <div class="branches-body">
+
+          <div class="city-group">
+            <div class="city-label">เชียงใหม่</div>
+            <div class="branch-row"><span class="branch-name">เมญ่า (MAYA)</span><span class="branch-tel">064-216-9010</span></div>
+            <div class="branch-row"><span class="branch-name">เซ็นทรัลเฟสติวัล</span><span class="branch-tel">063-835-7296</span></div>
+            <div class="branch-row"><span class="branch-name">เซ็นทรัลแอร์พอร์ต</span><span class="branch-tel">090-908-4217</span></div>
+            <div class="branch-row"><span class="branch-name">เซ็นทรัลแอร์พอร์ต (2)</span><span class="branch-tel">063-906-6683</span></div>
+          </div>
+
+          <div class="city-group">
+            <div class="city-label">พิษณุโลก</div>
+            <div class="branch-row"><span class="branch-name">เซ็นทรัลพิษณุโลก</span><span class="branch-tel">091-772-7946</span></div>
+          </div>
+
+          <div class="city-group">
+            <div class="city-label">นครสวรรค์</div>
+            <div class="branch-row"><span class="branch-name">Big C (V Square)</span><span class="branch-tel">063-849-4181</span></div>
+          </div>
+
+          <div class="city-group">
+            <div class="city-label">สมุทรปราการ</div>
+            <div class="branch-row"><span class="branch-name">เมกาบางนา</span><span class="branch-tel">082-902-1564</span></div>
+            <div class="branch-row"><span class="branch-name">เมกาบางนา ชั้น 2 <span style="font-size:11px;color:#6B7280">(ใน Studio7)</span></span><span class="branch-tel">—</span></div>
+          </div>
+
+          <div class="city-group">
+            <div class="city-label">กรุงเทพ</div>
+            <div class="branch-row"><span class="branch-name">ดุสิต เซ็นทรัล พาร์ค <span style="font-size:11px;color:#6B7280">(ใน Studio7)</span></span><span class="branch-tel">081-234-5570</span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Tip -->
+      <div class="tip-box animate-up delay-2">
+        <div class="icon">💡</div>
+        <div>เพียงแจ้งเจ้าหน้าที่ว่า <strong>"เป็นตัวแทน <span id="tipPartner">AIA The Next 5</span>"</strong> หรือแสดงการลงทะเบียนนี้ ก็รับสิทธิ์ได้ทันที</div>
+      </div>
+
+    </div><!-- /benefits-panel -->
+
+    <!-- ═══════════════════════════════════
+         RIGHT — FORM
+    ═══════════════════════════════════ -->
+    <div class="form-panel animate-up delay-2">
+      <div class="form-card">
+
+        <div class="form-header">
+          <div class="form-header-top">
+            <div class="form-badge">ลงทะเบียนรับสิทธิ์</div>
+            <div class="qr-placeholder">📋</div>
+          </div>
+          <h2>ลงทะเบียนรับสิทธิ์ล่วงหน้า</h2>
+          <p>กรุณากรอกข้อมูลเพื่อความรวดเร็วในการเข้ารับบริการ</p>
+        </div>
+
+        <!-- FORM -->
+        <div class="form-body" id="formBody">
+          <form id="registrationForm" novalidate>
+
+            <!-- ── ข้อมูลส่วนตัว ── -->
+            <div class="section-subtitle">ข้อมูลส่วนตัว</div>
+
+            <div class="field-row">
+              <div class="field-group">
+                <label>ชื่อ <span class="req">*</span></label>
+                <div class="input-wrap">
+                  <span class="input-icon">👤</span>
+                  <input type="text" id="firstName" name="firstName" class="has-icon" placeholder="ชื่อ" required />
+                </div>
+                <div class="error-msg" id="err-firstName">กรุณากรอกชื่อ</div>
+              </div>
+              <div class="field-group">
+                <label>นามสกุล <span class="req">*</span></label>
+                <div class="input-wrap">
+                  <input type="text" id="lastName" name="lastName" placeholder="นามสกุล" required />
+                </div>
+                <div class="error-msg" id="err-lastName">กรุณากรอกนามสกุล</div>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label>เบอร์ติดต่อ <span class="req">*</span></label>
+              <div class="input-wrap">
+                <span class="input-icon">📞</span>
+                <input type="tel" id="phone" name="phone" class="has-icon" placeholder="08X-XXX-XXXX" required />
+              </div>
+              <div class="error-msg" id="err-phone">กรุณากรอกเบอร์โทรที่ถูกต้อง</div>
+            </div>
+
+            <div class="field-group">
+              <label>อีเมล (ถ้ามี)</label>
+              <div class="input-wrap">
+                <span class="input-icon">✉️</span>
+                <input type="email" id="email" name="email" class="has-icon" placeholder="example@company.com" />
+              </div>
+              <div class="error-msg" id="err-email">รูปแบบอีเมลไม่ถูกต้อง</div>
+            </div>
+
+            <hr class="divider" />
+
+            <!-- ── บริการที่ต้องการ ── -->
+            <div class="section-subtitle">บริการที่ต้องการ</div>
+
+            <div class="field-group">
+              <label>เลือกบริการ <span class="req">*</span> <span style="font-weight:400;color:var(--icare-muted)">(เลือกได้มากกว่า 1 ข้อ)</span></label>
+              <div class="checkbox-group">
+                <label class="checkbox-item" onclick="toggleCheck(this)">
+                  <input type="checkbox" name="services" value="battery" />
+                  <div class="checkbox-content">
+                    <h5>เปลี่ยนแบตเตอรี่ iPhone</h5>
+                    <span class="tag red">ส่วนลด 1,000 บาท</span>
+                  </div>
+                </label>
+                <label class="checkbox-item" onclick="toggleCheck(this)">
+                  <input type="checkbox" name="services" value="ipad_check" />
+                  <div class="checkbox-content">
+                    <h5>ตรวจเช็ค iPad</h5>
+                    <span class="tag blue">ฟรี! ค่าบริการ 500 บาท</span>
+                  </div>
+                </label>
+                <label class="checkbox-item" onclick="toggleCheck(this)">
+                  <input type="checkbox" name="services" value="applecare" />
+                  <div class="checkbox-content">
+                    <h5>ต่ออายุ AppleCare+</h5>
+                    <span class="tag green">ส่วนลด 10% — iPhone / iPad / Mac</span>
+                  </div>
+                </label>
+              </div>
+              <div class="error-msg" id="err-services">กรุณาเลือกบริการอย่างน้อย 1 รายการ</div>
+            </div>
+
+            <hr class="divider" />
+
+            <!-- ── สาขา & วัน ── -->
+            <div class="section-subtitle">นัดหมายใช้บริการ</div>
+
+            <div class="field-group">
+              <label>สาขาที่ต้องการเข้ารับบริการ <span class="req">*</span></label>
+              <div class="input-wrap">
+                <span class="input-icon">📍</span>
+                <select id="branch" name="branch" class="has-icon" required>
+                  <option value="">— กรุณาเลือกสาขา —</option>
+                  <optgroup label="เชียงใหม่">
+                    <option value="cm_maya">เชียงใหม่ — เมญ่า (MAYA)</option>
+                    <option value="cm_festival">เชียงใหม่ — เซ็นทรัลเฟสติวัล</option>
+                    <option value="cm_airport">เชียงใหม่ — เซ็นทรัลแอร์พอร์ต</option>
+                    <option value="cm_airport2">เชียงใหม่ — เซ็นทรัลแอร์พอร์ต (2)</option>
+                  </optgroup>
+                  <optgroup label="พิษณุโลก">
+                    <option value="pl_central">พิษณุโลก — เซ็นทรัลพิษณุโลก</option>
+                  </optgroup>
+                  <optgroup label="นครสวรรค์">
+                    <option value="ns_bigc">นครสวรรค์ — Big C (V Square)</option>
+                  </optgroup>
+                  <optgroup label="สมุทรปราการ">
+                    <option value="sp_mega">สมุทรปราการ — เมกาบางนา</option>
+                    <option value="sp_mega2">สมุทรปราการ — เมกาบางนา ชั้น 2 (Studio7)</option>
+                  </optgroup>
+                  <optgroup label="กรุงเทพ">
+                    <option value="bkk_dusit">กรุงเทพ — ดุสิต เซ็นทรัล พาร์ค (Studio7)</option>
+                  </optgroup>
+                </select>
+              </div>
+              <div class="error-msg" id="err-branch">กรุณาเลือกสาขา</div>
+            </div>
+
+            <div class="field-group">
+              <label>วันที่คาดว่าจะเข้าใช้บริการ</label>
+              <div class="input-wrap">
+                <span class="input-icon">📅</span>
+                <input type="text" id="visitDate" name="visitDate" class="has-icon" placeholder="เช่น 15 มีนาคม 2568 หรือ ยังไม่แน่ใจ" />
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label>หมายเหตุเพิ่มเติม</label>
+              <textarea id="note" name="note" placeholder="เช่น รุ่น iPhone ที่ต้องการเปลี่ยนแบต, อาการเบื้องต้น..." class="not-has-icon"></textarea>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="submit-btn" id="submitBtn">
+              <span class="btn-icon">✅</span>
+              <span id="btnText">ยืนยันการลงทะเบียนรับสิทธิ์</span>
+            </button>
+
+            <p class="consent-text">
+              ข้อมูลของท่านจะถูกเก็บเป็นความลับและใช้เพื่อการให้บริการเท่านั้น<br/>
+              โดย <strong>iCare Apple Authorized Service Provider</strong>
+            </p>
+
+          </form>
+        </div><!-- /form-body -->
+
+        <!-- SUCCESS -->
+        <div class="success-screen" id="successScreen">
+          <div class="success-icon">✅</div>
+          <h3>ลงทะเบียนสำเร็จแล้ว!</h3>
+          <p>เราได้รับข้อมูลของคุณเรียบร้อยแล้ว<br/>
+             กรุณาแจ้งเจ้าหน้าที่สาขาว่า <strong>"ลงทะเบียนออนไลน์แล้ว"</strong> เพื่อรับสิทธิ์ได้ทันที</p>
+          <div class="success-ref">
+            หมายเลขอ้างอิง: <strong id="refNumber">—</strong>
+          </div>
+          <button class="new-reg-btn" onclick="resetForm()">+ ลงทะเบียนรายชื่อใหม่</button>
+        </div>
+
+      </div><!-- /form-card -->
+    </div><!-- /form-panel -->
+
+  </div><!-- /grid -->
+
+  <div class="page-footer">
+    <strong>iCare</strong> — Apple Authorized Service Provider &nbsp;|&nbsp;
+    Powered by <strong>iCare Corporate Service</strong><br/>
+    © 2025 iCare. สงวนลิขสิทธิ์ทุกประการ
+  </div>
+</div><!-- /page-wrapper -->
+
+<script>
+// ════════════════════════════════════════
+// 🔧 CONFIGURATION — ปรับตามแต่ละแคมเปญ
+// ════════════════════════════════════════
+const CONFIG = {
+  partnerName:    "AIA The Next 5",
+  partnerTagline: "เอกสิทธิ์เฉพาะคุณ ดูแลอุปกรณ์คู่ใจให้พร้อมใช้งานเสมอ",
+  campaignCode:   "AIA-NEXT5",
+
+  // 🔗 ใส่ URL ของ Google Apps Script Web App ตรงนี้
+  // วิธีสร้าง: Google Sheets → Extensions → Apps Script → Deploy as Web App
+  APPS_SCRIPT_URL: "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE",
+};
+
+// Apply config on load
+document.getElementById("partnerName").textContent    = CONFIG.partnerName;
+document.getElementById("partnerTagline").textContent = CONFIG.partnerTagline;
+document.getElementById("tipPartner").textContent     = CONFIG.partnerName;
+
+// Toggle checkbox styling
+function toggleCheck(label) {
+  const cb = label.querySelector('input[type=checkbox]');
+  // cb.checked is toggled before this fires, so just sync class
+  setTimeout(() => {
+    label.classList.toggle('checked', cb.checked);
+  }, 0);
+}
+
+// Generate ref number
+function genRef() {
+  const d = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  return `${CONFIG.campaignCode}-${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}-${Math.random().toString(36).slice(2,6).toUpperCase()}`;
+}
+
+// Validation helpers
+function showError(id, show=true) {
+  const el = document.getElementById('err-'+id);
+  if (el) el.classList.toggle('visible', show);
+}
+function markError(id, show=true) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('error', show);
+}
+
+// Form submit
+document.getElementById('registrationForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  let valid = true;
+
+  // Validate fields
+  const firstName = document.getElementById('firstName').value.trim();
+  const lastName  = document.getElementById('lastName').value.trim();
+  const phone     = document.getElementById('phone').value.trim();
+  const email     = document.getElementById('email').value.trim();
+  const branch    = document.getElementById('branch').value;
+  const services  = [...document.querySelectorAll('input[name=services]:checked')].map(c=>c.value);
+
+  [['firstName',!firstName], ['lastName',!lastName],
+   ['phone', !/^0\d{8,9}$/.test(phone.replace(/[-\s]/g,''))],
+   ['email', email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)],
+   ['branch', !branch],
+   ['services', services.length === 0]
+  ].forEach(([id, hasErr]) => {
+    showError(id, hasErr);
+    markError(id, hasErr);
+    if (hasErr) valid = false;
+  });
+
+  if (!valid) {
+    document.querySelector('.error.error-msg.visible, .error-msg.visible')?.scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+
+  // Collect data
+  const serviceLabels = {
+    battery:    'เปลี่ยนแบตเตอรี่ iPhone',
+    ipad_check: 'ตรวจเช็ค iPad',
+    applecare:  'ต่ออายุ AppleCare+'
+  };
+
+  const payload = {
+    timestamp:   new Date().toLocaleString('th-TH'),
+    campaign:    CONFIG.campaignCode,
+    partner:     CONFIG.partnerName,
+    firstName, lastName,
+    phone,
+    email:       email || '-',
+    services:    services.map(s => serviceLabels[s]||s).join(', '),
+    branch:      document.getElementById('branch').selectedOptions[0]?.text || branch,
+    visitDate:   document.getElementById('visitDate').value || '-',
+    note:        document.getElementById('note').value || '-',
+    refNumber:   genRef(),
+  };
+
+  // UI loading state
+  const btn = document.getElementById('submitBtn');
+  const btnText = document.getElementById('btnText');
+  btn.disabled = true;
+  btnText.innerHTML = '<span class="spinner"></span> กำลังบันทึก...';
+  btn.innerHTML = btn.innerHTML; // rerender
+
+  btn.disabled = true;
+  btn.innerHTML = `<span class="spinner" style="width:18px;height:18px;border:2px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;display:inline-block;"></span> &nbsp;กำลังบันทึก...`;
+
+  try {
+    // Send to Google Apps Script
+    if (CONFIG.APPS_SCRIPT_URL && CONFIG.APPS_SCRIPT_URL !== "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE") {
+      const formData = new FormData();
+      Object.entries(payload).forEach(([k,v]) => formData.append(k,v));
+      await fetch(CONFIG.APPS_SCRIPT_URL, { method: 'POST', body: formData, mode: 'no-cors' });
+    } else {
+      // Simulate for demo
+      await new Promise(r => setTimeout(r, 1000));
+      console.log("📋 Registration data (demo mode):", payload);
+    }
+
+    // Show success
+    document.getElementById('refNumber').textContent = payload.refNumber;
+    document.getElementById('formBody').style.display = 'none';
+    document.getElementById('successScreen').classList.add('visible');
+
+  } catch(err) {
+    console.error(err);
+    alert('เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง หรือติดต่อสาขาโดยตรง');
+    btn.disabled = false;
+    btn.innerHTML = `<span class="btn-icon">✅</span> <span>ยืนยันการลงทะเบียนรับสิทธิ์</span>`;
+  }
+});
+
+// Reset
+function resetForm() {
+  document.getElementById('registrationForm').reset();
+  document.querySelectorAll('.checkbox-item').forEach(el => el.classList.remove('checked'));
+  document.querySelectorAll('.error-msg.visible').forEach(el => el.classList.remove('visible'));
+  document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+  document.getElementById('formBody').style.display = '';
+  document.getElementById('successScreen').classList.remove('visible');
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = false;
+  btn.innerHTML = `<span class="btn-icon">✅</span> <span id="btnText">ยืนยันการลงทะเบียนรับสิทธิ์</span>`;
+}
+
+// Clear errors on input
+document.querySelectorAll('input,select,textarea').forEach(el => {
+  el.addEventListener('input', () => {
+    showError(el.id, false);
+    markError(el.id, false);
+  });
+});
+</script>
+</body>
+</html>
